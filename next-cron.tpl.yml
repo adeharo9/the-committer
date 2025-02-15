@@ -1,0 +1,34 @@
+name: 'Set the next commit schedule'
+
+on:
+  schedule:
+    - cron: '$NEXT_MINUTE $NEXT_HOUR * * *'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static-test-dev:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 'Checkout GitHub repository'
+        uses: actions/checkout@v4
+
+      - name: 'Determine next cron schedule'
+        run: ./next-cron.sh
+
+      - name: 'Configure Git identity'
+        run: |
+          git config --global user.name 'Alejandro de Haro'
+          git config --global user.email 'adeharo9@users.noreply.github.com'
+
+      - name: 'Commit changes'
+        run: |
+          git add .github/workflows/next-cron.yml
+          git commit -m "Automated cron change: $(cat next-cron.txt)"
+
+      - name: 'Push changes to GitHub repository'
+        run: git push
