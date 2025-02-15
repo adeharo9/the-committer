@@ -5,7 +5,7 @@ on:
     - cron: '$NEXT_MINUTE $NEXT_HOUR * * *'
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: '${{ github.workflow }}-${{ github.ref }}'
   cancel-in-progress: true
 
 jobs:
@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: 'Checkout GitHub repository'
         uses: actions/checkout@v4
+        with:
+          token: '${{ secrets.WORKFLOW_TOKEN }}'
 
       - name: 'Determine next cron schedule'
         run: ./next-cron.sh
@@ -31,6 +33,4 @@ jobs:
           git commit -m "Automated cron change: $(cat next-cron.txt)"
 
       - name: 'Push changes to GitHub repository'
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         run: git push
