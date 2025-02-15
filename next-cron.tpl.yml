@@ -30,7 +30,7 @@ jobs:
       - name: 'Commit changes'
         run: |
           git add .github/workflows/next-cron.yml
-          git commit -m "Automated cron change: $(cat next-cron.txt)"
+          git commit -m "Automated cron change: next run at $(cat next-cron.txt) UTC"
 
       - name: 'Push changes to GitHub repository'
         run: git push

@@ -2,7 +2,7 @@ name: 'Set the next commit schedule'
 
 on:
   schedule:
-    - cron: '20 17 * * *'
+    - cron: '45 16 * * *'
 
 concurrency:
   group: '${{ github.workflow }}-${{ github.ref }}'
@@ -30,7 +30,7 @@ jobs:
       - name: 'Commit changes'
         run: |
           git add .github/workflows/next-cron.yml
-          git commit -m "Automated cron change: $(cat next-cron.txt)"
+          git commit -m "Automated cron change: next run at $(cat next-cron.txt) UTC"
 
       - name: 'Push changes to GitHub repository'
         run: git push
