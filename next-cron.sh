@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Determine the value of now
-NOW=$(date +"%H:%M");
+NOW=$(date +"%-H:%-M");
 
 echo "Now: $NOW UTC";
 
