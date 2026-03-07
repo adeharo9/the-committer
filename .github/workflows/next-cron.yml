@@ -2,7 +2,7 @@ name: 'Set the next commit schedule'
 
 on:
   schedule:
-    - cron: '30 23 * * *'
+    - cron: '50 20 * * *'
 
 concurrency:
   group: '${{ github.workflow }}-${{ github.ref }}'
